@@ -11,8 +11,8 @@ if(isset($_POST['reset_password'])){
     $token = $_POST['token'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-
     if($password == $confirm_password){
+
         $result = getAllUsers("token = '$token'");
         if ($row = mysqli_fetch_assoc($result)){
             $email= $row['email'];

@@ -38,10 +38,10 @@ if(!isset($_GET['forgot'])){
                 <h4>Forgot your password?</h4>
                 <p>Enter your email address and we will send you instructions on how to reset your password.</p>
             </div>
-            <form action="includes/process-forgot-password.php" method="post">
+            <form action="includes/process_forgot_password.php" method="post">
                 <div class="form-group">
                     <div class="form-label-group">
-                        <input type="text" id="email" class="form-control" placeholder="Enter email address" required="required" autofocus="autofocus">
+                        <input type="text" id="email" name="email" class="form-control" placeholder="Enter email address" required="required" autofocus="autofocus">
                         <label for="email">Enter email address</label>
                     </div>
                 </div>

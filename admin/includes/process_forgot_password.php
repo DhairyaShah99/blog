@@ -1,26 +1,27 @@
 <?php
-include_once ("admin_functions.php");
+include_once ("admin_connection.php");
 if(isset($_POST['forgot_password'])){
-    $email = $_POST['forgot_password'];
+    $email = $_POST['email'];
     $query = "SELECT * FROM users WHERE email = '{$email}'";
-    $result = mysqli_query($connection, $query);
-    if(mysqli_num_rows($result) == 1){
+    $result = mysqli_query($connection,$query);
+    if(mysqli_num_rows($result)==1){
         $length = 50;
-        $token = bin2hex(openssl_random_pseudo_bytes($lenght));
-        $query = "UPDATE users SET token = '{$token}' WHERE email = '{$email}' ";
+        $token = bin2hex(openssl_random_pseudo_bytes($length));
+        $query = "UPDATE users SET token='{$token}' WHERE email = '{$email}'";
         $result = mysqli_query($connection, $query);
 
-        //code to send mail
+        //code to send email
+        $to = $email;
+        $subject="RESET PASSWORD!!";
 
-        $to = "mohittnagpal@gmail.com";
-        $subject = "TEST MAIL";
+        $message = "To reset your password please click the below link<br>";
+        $message .="<a href='http://localhost/cms/admin/reset.php?token={$token}'>http://localhost/cms/admin/reset.php?token={$token}</a>";
 
-        $message = "<b>To reset your password pls click the link below...</b>";
-        $message .= "<a href='http://localhost/cms/admin/reset.php?token={$token}'>http://localhost/cms/admin/reset.php?token={$token}</a>";
-
-        $header = "From:shubhamvira@gmail.com\r\n";
+        $header = "From:noreply@cms.com\r\n";
         $header .= "MIME-version: 1.0\r\n";
         $header .= "Content-Type: text/html\r\n";
+        echo $message;
+        die($message);
 
         if(mail($to, $subject, $message, $header)){
             echo "sent";
